@@ -27,7 +27,7 @@
         <maven.surefire>3.0.0-M5</maven.surefire>
         <maven.jar>3.2.0</maven.jar>
         <maven.install>3.0.0-M1</maven.install>
-        
+
         <!-- SonarCloud properties -->
         <sonar.organization>mathieusoysal</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -35,6 +35,11 @@
 
     <dependencies>
         <!-- Dependencies -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.4.0</version>
+        </dependency>
 
 
         <!-- Testing dependencies-->

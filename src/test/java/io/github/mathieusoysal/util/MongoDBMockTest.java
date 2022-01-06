@@ -3,7 +3,9 @@ package io.github.mathieusoysal.util;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import com.mongodb.MongoClient;
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
@@ -30,8 +32,7 @@ public abstract class MongoDBMockTest {
         port = Network.getFreeServerPort();
         mongodExe = starter.prepare(createMongodConfig());
         mongod = mongodExe.start();
-
-        mongoClient = new MongoClient("localhost", port);
+        mongoClient = MongoClients.create(new ConnectionString("mongodb://localhost:" + port + "/"));
     }
 
     protected int port() {

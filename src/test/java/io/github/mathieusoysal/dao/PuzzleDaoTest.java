@@ -32,7 +32,8 @@ public class PuzzleDaoTest extends MongoDBMockTest {
     @AfterEach
     public void tearDown() throws Exception {
         mongoClient.getDatabase("CodinGame-stats")
-                .getCollection("puzzles-today's").deleteMany(new Document());
+                .getCollection(PuzzlesDao.PUZZLES_HISTORY_COLLECTION)
+                .deleteMany(new Document());
         super.tearDown();
     }
 
@@ -61,7 +62,7 @@ public class PuzzleDaoTest extends MongoDBMockTest {
 
     private long countDocuments() {
         return mongoClient.getDatabase("CodinGame-stats")
-                .getCollection("puzzles-today's")
+                .getCollection(PuzzlesDao.PUZZLES_HISTORY_COLLECTION)
                 .countDocuments();
     }
 

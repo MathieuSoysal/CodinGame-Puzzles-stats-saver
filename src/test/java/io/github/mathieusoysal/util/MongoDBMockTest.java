@@ -17,10 +17,6 @@ import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
 
 public abstract class MongoDBMockTest {
-    /**
-     * please store Starter or RuntimeConfig in a static final field
-     * if you want to use artifact store caching (or else disable caching)
-     */
     private static final MongodStarter starter = MongodStarter.getDefaultInstance();
 
     private MongodExecutable mongodExe;

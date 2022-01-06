@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
@@ -28,7 +30,12 @@ public abstract class MongoDBMockTest {
         port = Network.getFreeServerPort();
         mongodExe = starter.prepare(createMongodConfig());
         mongod = mongodExe.start();
-        mongoClient = MongoClients.create(new ConnectionString("mongodb://localhost:" + port + "/"));
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString("mongodb://localhost:" + port + "/"))
+                .retryWrites(true)
+                .writeConcern(WriteConcern.MAJORITY)
+                .build();
+        mongoClient = MongoClients.create(settings);
     }
 
     protected int port() {

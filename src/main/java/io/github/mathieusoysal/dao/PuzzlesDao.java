@@ -1,6 +1,5 @@
 package io.github.mathieusoysal.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.github.mathieusoysal.codingame_stats.puzzle.Puzzle;
@@ -11,7 +10,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.BulkWriteOptions;
 import com.mongodb.client.model.InsertOneModel;
-import com.mongodb.client.model.WriteModel;
 
 import org.bson.Document;
 
@@ -27,11 +25,11 @@ public class PuzzlesDao extends AbstractCGSaverDao {
     }
 
     public boolean saveAll(List<Puzzle> puzzles) {
-        List<WriteModel<Document>> bulkWrites = new ArrayList<>();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        puzzles.parallelStream()
-                .forEach(puzzle -> bulkWrites.add(new InsertOneModel<>(Document.parse(gson.toJson(puzzle)))));
+        List<InsertOneModel<Document>> bulkWrites = puzzles.parallelStream()
+                .map(puzzle -> new InsertOneModel<>(Document.parse(gson.toJson(puzzle))))
+                .toList();
         BulkWriteOptions bulkWriteOptions = new BulkWriteOptions().ordered(false);
         BulkWriteResult bulkWriteResult = collection.bulkWrite(bulkWrites, bulkWriteOptions);
         return bulkWriteResult.wasAcknowledged();

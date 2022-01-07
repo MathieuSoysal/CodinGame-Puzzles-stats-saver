@@ -47,7 +47,7 @@ public class PuzzleDaoTest extends MongoDBMockTest {
         assertEquals(puzzles.size(), countDocuments());
     }
 
-    @RepeatedTest(4)
+    @RepeatedTest(10)
     void testSaveAll_shouldAugmentCollectionSize_withAllPuzzles() {
         List<Puzzle> puzzles = new CodinGame().getPuzzles();
         puzzleDao.saveAll(puzzles);

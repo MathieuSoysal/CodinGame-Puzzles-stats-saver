@@ -63,9 +63,9 @@ public class PuzzleDatorTest {
         for (DatedPuzzle datedPuzzle : datedPuzzles) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(datedPuzzle.date());
-            assertEquals(calendar.get(Calendar.YEAR), 2014);
-            assertEquals(calendar.get(Calendar.MONTH), Calendar.DECEMBER);
-            assertEquals(calendar.get(Calendar.DAY_OF_MONTH), 22);
+            assertEquals(2014, calendar.get(Calendar.YEAR));
+            assertEquals(Calendar.DECEMBER, calendar.get(Calendar.MONTH));
+            assertEquals(22, calendar.get(Calendar.DAY_OF_MONTH));
         }
     }
 }

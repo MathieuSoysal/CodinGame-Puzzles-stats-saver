@@ -1,7 +1,5 @@
 package io.github.mathieusoysal;
 
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 
 import com.github.mathieusoysal.codingame_stats.CodinGame;

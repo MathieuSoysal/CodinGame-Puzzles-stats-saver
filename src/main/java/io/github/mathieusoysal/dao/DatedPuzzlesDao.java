@@ -1,10 +1,7 @@
 package io.github.mathieusoysal.dao;
 
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 
-import com.github.mathieusoysal.codingame_stats.puzzle.Puzzle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.bulk.BulkWriteResult;

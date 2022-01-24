@@ -1,5 +1,7 @@
 package io.github.mathieusoysal.dao;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import com.github.mathieusoysal.codingame_stats.puzzle.Puzzle;
@@ -13,18 +15,20 @@ import com.mongodb.client.model.InsertOneModel;
 
 import org.bson.Document;
 
-public class PuzzlesDao extends AbstractCGSaverDao {
+import io.github.mathieusoysal.model.DatedPuzzle;
+
+public class DatedPuzzlesDao extends AbstractCGSaverDao {
 
     public static final String PUZZLES_HISTORY_COLLECTION = "puzzles-history";
 
     private MongoCollection<Document> collection;
 
-    public PuzzlesDao(MongoClient mongoClient, String databaseName) {
+    public DatedPuzzlesDao(MongoClient mongoClient, String databaseName) {
         super(mongoClient, databaseName);
         collection = db.getCollection(PUZZLES_HISTORY_COLLECTION);
     }
 
-    public boolean saveAll(List<Puzzle> puzzles) {
+    public boolean saveAll(List<DatedPuzzle> puzzles) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<InsertOneModel<Document>> bulkWrites = puzzles.parallelStream()

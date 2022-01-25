@@ -28,6 +28,21 @@ $ docker run \
 
 *The `--period <number>` argument define the period in hours to execute the saver, you can define this to `0` if you want a unique single execution.*
 
+## How to contribute
+
+### Clone the project
+
+```bash
+$ git clone https://github.com/MathieuSoysal/CodinGame-Puzzles-stats-saver.git
+```
+
+### Test the project
+
+```bash
+$ mvn test
+```
+*note: you don't need a MongoDB database, the project has a embeded MongoDB database for testing*
+
 ## Contact
 
 If you have any problems to setup the program do not hesitate to contact me at Mathieu.Soysal@etu.umontpellier.fr

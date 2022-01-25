@@ -18,11 +18,11 @@ $ docker pull ghcr.io/mathieusoysal/codingame-puzzles-stats-saver:todo
 ### Run
 
 ```bash
-$ docker run 
-  -e MONGODB_PASSWORD=<the password>
-  -e MONGODB_USERNAME=<the username>
-  -e MONGODB_ADDRESS=<the address>
-  -e MONGODB_DATABASE=<the database>
+$ docker run \
+  -e MONGODB_PASSWORD=<the password> \
+  -e MONGODB_USERNAME=<the username> \
+  -e MONGODB_ADDRESS=<the address> \
+  -e MONGODB_DATABASE=<the database> \
   ghcr.io/mathieusoysal/codingame-puzzles-stats-saver:todo --perdiod 24
 ```
 

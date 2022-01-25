@@ -1,6 +1,7 @@
 package io.github.mathieusoysal;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,19 +23,12 @@ import io.github.mathieusoysal.utils.PuzzleDator;
 public class App {
     private static final Logger LOGGER = LogManager.getLogger("CodinGame-puzzles-stats-saver");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ArgumentManager.setArguments(args);
-        ScheduledExecutorService executor = executeWithPeriod(
-                App::synchronizePuzzlesToMongoDB,
-                ArgumentManager.getPeriod());
-        if (ArgumentManager.getPeriod() < 1)
-            executor.shutdown();
-    }
-
-    private static ScheduledExecutorService executeWithPeriod(Runnable runnable, int period) {
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.schedule(runnable, Math.max(1, period), TimeUnit.HOURS);
-        return executor;
+        do {
+            synchronizePuzzlesToMongoDB();
+            TimeUnit.HOURS.sleep(ArgumentManager.getPeriod());
+        } while (ArgumentManager.getPeriod() < 1);
     }
 
     private static void synchronizePuzzlesToMongoDB() {

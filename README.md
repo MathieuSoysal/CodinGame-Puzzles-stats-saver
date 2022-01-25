@@ -26,7 +26,7 @@ $ docker run \
   ghcr.io/mathieusoysal/codingame-puzzles-stats-saver:todo --perdiod 24
 ```
 
-**The `--period <number>` argument define the period in hours to execute the saver, you can define this to `0` if you want a unique single execution.** 
+*The `--period <number>` argument define the period in hours to execute the saver, you can define this to `0` if you want a unique single execution.*
 
 ## Contact
 

@@ -4,28 +4,30 @@
 ![GitHub Actions](https://github.com/MathieuSoysal/CodinGame-Puzzles-stats-saver/workflows/Java%20CI%20with%20Maven/badge.svg)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) 
 
-# <img src="https://cdn.iconscout.com/icon/free/png-512/java-43-569305.png" width="100"> Java Maven project template [![GitHub](https://img.shields.io/badge/license-Apache%202.0%20License-green)](LICENSE)
+# <img src="https://cdn.iconscout.com/icon/free/png-512/java-43-569305.png" width="100"> CodinGame Puzzles Stats Saver [![GitHub](https://img.shields.io/badge/license-Apache%202.0%20License-green)](LICENSE)
 
-Template for basic maven project with CI SonarCloud, QL and CD to automatically deploy docker image on release.
+A program to save regularly the statistics of CodinGame's puzzles to your MongoDB database.
 
-## Use template
+## Use the program
 
-To use this template, you just have to click on "Use this template" on the main page of this repository, or you can copy/paste it.
+### Install
 
-## Template configuration :
+```bash
+$ docker pull ghcr.io/mathieusoysal/codingame-puzzles-stats-saver:todo
+```
+### Run
 
-- [ ] **Fix pom.xml**
-  - *To guide you, a FIXME tag has been added to all lines to be edited.*
-- [ ] **Config SonarCloud**
-  - To configure SonarCloud to your project you need to go on https://sonarcloud.io
-  - Replace the file at [/.github/workflows/sonar.yml](.github/workflows/sonar.yml) with your own yaml file at https://sonarcloud.io and if your Java project is not on Java 11, edit this yaml file.
+```bash
+$ docker run 
+  -e MONGODB_PASSWORD=<the password>
+  -e MONGODB_USERNAME=<the username>
+  -e MONGODB_ADDRESS=<the address>
+  -e MONGODB_DATABASE=<the database>
+  ghcr.io/mathieusoysal/codingame-puzzles-stats-saver:todo --perdiod 24
+```
 
-
-## Badges
-
-Don't forget to add your own SonarCloud badges to your readme 😉
-
+**The `--period <number>` argument define the period in hours to execute the saver, you can define this to `0` if you want a unique single execution.** 
 
 ## Contact
 
-If you have any problems setting up CI, CD or other, do not hesitate to contact me at Mathieu.Soysal@etu.umontpellier.fr
+If you have any problems to setup the program do not hesitate to contact me at Mathieu.Soysal@etu.umontpellier.fr

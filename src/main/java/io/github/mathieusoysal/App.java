@@ -20,7 +20,7 @@ import io.github.mathieusoysal.resources.ApplicationProperties;
 import io.github.mathieusoysal.utils.PuzzleDator;
 
 public class App {
-    private static Logger logger = LogManager.getLogger("CodinGame-puzzles-stats-saver");
+    private static final Logger LOGGER = LogManager.getLogger("CodinGame-puzzles-stats-saver");
 
     public static void main(String[] args) {
         ArgumentManager.setArguments(args);
@@ -44,7 +44,7 @@ public class App {
             List<Puzzle> puzzles = new CodinGame().getPuzzles();
             List<DatedPuzzle> datedPuzzles = PuzzleDator.datePuzzles(puzzles);
             puzzlesDao.saveAll(datedPuzzles);
-            logger.info("Synchronized {} puzzles to MongoDB", datedPuzzles.size());
+            LOGGER.info("Synchronized {} puzzles to MongoDB", datedPuzzles.size());
         }
     }
 }

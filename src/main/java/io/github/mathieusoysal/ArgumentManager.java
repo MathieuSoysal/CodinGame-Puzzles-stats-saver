@@ -6,17 +6,14 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.logging.log4j.Logger;
 
 import io.github.mathieusoysal.exceptions.InvalidArgumentException;
 
 public class ArgumentManager {
-    private ArgumentManager() {
-        throw new IllegalStateException("Utility class");
-    }
 
-    private static final Logger LOGGER = org.apache.logging.log4j.LogManager.getLogger(ArgumentManager.class);
-    private static Options options;
+    private static final Options options = new Options();
+    private static final CommandLineParser PARSER = new DefaultParser();
+    private static CommandLine line;
     static {
         final Option periodOption = Option.builder("p")
                 .longOpt("period")
@@ -26,12 +23,12 @@ public class ArgumentManager {
                 .required(true)
                 .build();
 
-        options = new Options();
-
         options.addOption(periodOption);
     }
-    private static final CommandLineParser PARSER = new DefaultParser();
-    private static CommandLine line;
+
+    private ArgumentManager() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void setArguments(String[] args) {
         try {

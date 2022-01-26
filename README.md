@@ -13,7 +13,7 @@ A program to save regularly the statistics of CodinGame's puzzles to your MongoD
 ### Install
 
 ```bash
-$ docker pull ghcr.io/mathieusoysal/codingame-puzzles-stats-saver:todo
+$ docker pull ghcr.io/mathieusoysal/codingame-puzzles-stats-saver:v1.0.0
 ```
 ### Run
 
@@ -23,7 +23,7 @@ $ docker run \
   -e MONGODB_USERNAME=<the username> \
   -e MONGODB_ADDRESS=<the address> \
   -e MONGODB_DATABASE=<the database> \
-  ghcr.io/mathieusoysal/codingame-puzzles-stats-saver:todo --perdiod 24
+  ghcr.io/mathieusoysal/codingame-puzzles-stats-saver:v1.0.0 --period 24
 ```
 
 *The `--period <number>` argument define the period in hours to execute the saver, you can define this to `0` if you want a unique single execution.*

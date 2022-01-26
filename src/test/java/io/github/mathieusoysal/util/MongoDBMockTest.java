@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
@@ -17,10 +19,6 @@ import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
 
 public abstract class MongoDBMockTest {
-    /**
-     * please store Starter or RuntimeConfig in a static final field
-     * if you want to use artifact store caching (or else disable caching)
-     */
     private static final MongodStarter starter = MongodStarter.getDefaultInstance();
 
     private MongodExecutable mongodExe;
@@ -32,7 +30,12 @@ public abstract class MongoDBMockTest {
         port = Network.getFreeServerPort();
         mongodExe = starter.prepare(createMongodConfig());
         mongod = mongodExe.start();
-        mongoClient = MongoClients.create(new ConnectionString("mongodb://localhost:" + port + "/"));
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString("mongodb://localhost:" + port + "/"))
+                .retryWrites(true)
+                .writeConcern(WriteConcern.MAJORITY)
+                .build();
+        mongoClient = MongoClients.create(settings);
     }
 
     protected int port() {

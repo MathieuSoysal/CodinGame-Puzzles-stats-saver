@@ -15,21 +15,22 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import io.github.mathieusoysal.util.MongoDBMockTest;
+import io.github.mathieusoysal.utils.PuzzleDator;
 
-public class PuzzleDaoTest extends MongoDBMockTest {
+public class DatedPuzzlesDaoTest extends MongoDBMockTest {
 
-    private PuzzlesDao puzzleDao;
+    private DatedPuzzlesDao puzzleDao;
 
     @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
-        puzzleDao = new PuzzlesDao(mongoClient, "CodinGame-stats");
+        puzzleDao = new DatedPuzzlesDao(mongoClient, "CodinGame-stats");
     }
 
     @AfterEach
     public void tearDown() throws Exception {
         mongoClient.getDatabase("CodinGame-stats")
-                .getCollection(PuzzlesDao.PUZZLES_HISTORY_COLLECTION)
+                .getCollection(DatedPuzzlesDao.PUZZLES_HISTORY_COLLECTION)
                 .deleteMany(new Document());
         super.tearDown();
     }
@@ -37,26 +38,29 @@ public class PuzzleDaoTest extends MongoDBMockTest {
     @Test
     void testSaveAll_shouldReturnTrue_withTwoPuzzles() {
         List<Puzzle> puzzles = new CodinGame().getPuzzles().subList(0, 2);
-        assertTrue(puzzleDao.saveAll(puzzles));
+        var datedPuzzles = PuzzleDator.datePuzzles(puzzles);
+        assertTrue(puzzleDao.saveAll(datedPuzzles));
     }
 
     @Test
     void testSaveAll_shouldAugmentCollectionSize_withTwoPuzzles() {
         List<Puzzle> puzzles = new CodinGame().getPuzzles().subList(0, 2);
-        puzzleDao.saveAll(puzzles);
+        var datedPuzzles = PuzzleDator.datePuzzles(puzzles);
+        puzzleDao.saveAll(datedPuzzles);
         assertEquals(puzzles.size(), countDocuments());
     }
 
-    @RepeatedTest(4)
+    @RepeatedTest(10)
     void testSaveAll_shouldAugmentCollectionSize_withAllPuzzles() {
         List<Puzzle> puzzles = new CodinGame().getPuzzles();
-        puzzleDao.saveAll(puzzles);
+        var datedPuzzles = PuzzleDator.datePuzzles(puzzles);
+        puzzleDao.saveAll(datedPuzzles);
         assertEquals(puzzles.size(), countDocuments());
     }
 
     private long countDocuments() {
         return mongoClient.getDatabase("CodinGame-stats")
-                .getCollection(PuzzlesDao.PUZZLES_HISTORY_COLLECTION)
+                .getCollection(DatedPuzzlesDao.PUZZLES_HISTORY_COLLECTION)
                 .countDocuments();
     }
 

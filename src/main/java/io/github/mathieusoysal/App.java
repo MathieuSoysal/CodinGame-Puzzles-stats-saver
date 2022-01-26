@@ -1,9 +1,6 @@
 package io.github.mathieusoysal;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.github.mathieusoysal.codingame_stats.CodinGame;
@@ -28,7 +25,7 @@ public class App {
         do {
             synchronizePuzzlesToMongoDB();
             TimeUnit.HOURS.sleep(ArgumentManager.getPeriod());
-        } while (ArgumentManager.getPeriod() < 1);
+        } while (ArgumentManager.getPeriod() > 0);
     }
 
     private static void synchronizePuzzlesToMongoDB() {

@@ -1,5 +1,6 @@
 package io.github.mathieusoysal.dao;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 import com.github.mathieusoysal.codingame_stats.CodinGame;
 import com.github.mathieusoysal.codingame_stats.puzzle.Puzzle;
+import com.mongodb.client.FindIterable;
 
 import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
@@ -17,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import io.github.mathieusoysal.util.MongoDBMockTest;
 import io.github.mathieusoysal.utils.PuzzleDator;
 
-public class DatedPuzzlesDaoTest extends MongoDBMockTest {
+class DatedPuzzlesDaoTest extends MongoDBMockTest {
 
     private DatedPuzzlesDao puzzleDao;
 
@@ -56,6 +58,17 @@ public class DatedPuzzlesDaoTest extends MongoDBMockTest {
         var datedPuzzles = PuzzleDator.datePuzzles(puzzles);
         puzzleDao.saveAll(datedPuzzles);
         assertEquals(puzzles.size(), countDocuments());
+    }
+
+    @Test
+    void testSaveAll_shouldAddGoodDate() {
+        List<Puzzle> puzzles = new CodinGame().getPuzzles().subList(0, 2);
+        var datedPuzzles = PuzzleDator.datePuzzles(puzzles);
+        puzzleDao.saveAll(datedPuzzles);
+        FindIterable<Document> document = mongoClient.getDatabase("CodinGame-stats")
+                .getCollection(DatedPuzzlesDao.PUZZLES_HISTORY_COLLECTION)
+                .find().limit(1);
+        assertDoesNotThrow(() -> document.first().getDate("date"));
     }
 
     private long countDocuments() {

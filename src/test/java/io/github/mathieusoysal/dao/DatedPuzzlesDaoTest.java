@@ -69,7 +69,8 @@ class DatedPuzzlesDaoTest extends MongoDBMockTest {
         FindIterable<Document> document = mongoClient.getDatabase("CodinGame-stats")
                 .getCollection(DatedPuzzlesDao.PUZZLES_HISTORY_COLLECTION)
                 .find().limit(1);
-        assertTrue(document.first().getString("date").matches(regex));
+        String date = document.first().getString("date");
+        assertTrue(date.matches(regex), date);
     }
 
     private long countDocuments() {

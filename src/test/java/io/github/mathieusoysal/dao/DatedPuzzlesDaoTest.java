@@ -21,7 +21,7 @@ import io.github.mathieusoysal.util.MongoDBMockTest;
 import io.github.mathieusoysal.utils.PuzzleDator;
 
 class DatedPuzzlesDaoTest extends MongoDBMockTest {
-    private final String regex = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}$";
+    private final String regex = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}(\\+\\d{2}:\\d{2}|[Zz])$";
     private DatedPuzzlesDao puzzleDao;
 
     @BeforeEach

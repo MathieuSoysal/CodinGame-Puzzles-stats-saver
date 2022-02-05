@@ -16,6 +16,9 @@ import io.github.mathieusoysal.model.DatedPuzzle;
 
 public class DatedPuzzlesDao extends AbstractCGSaverDao {
 
+    private static final Gson DATED_PUZZLES_GSON = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSXXX")
+            .create();
     public static final String PUZZLES_HISTORY_COLLECTION = "puzzles-history";
 
     private MongoCollection<Document> collection;
@@ -26,10 +29,8 @@ public class DatedPuzzlesDao extends AbstractCGSaverDao {
     }
 
     public boolean saveAll(List<DatedPuzzle> puzzles) {
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
         List<InsertOneModel<Document>> bulkWrites = puzzles.parallelStream()
-                .map(puzzle -> new InsertOneModel<>(Document.parse(gson.toJson(puzzle))))
+                .map(puzzle -> new InsertOneModel<>(Document.parse(DATED_PUZZLES_GSON.toJson(puzzle))))
                 .toList();
         BulkWriteOptions bulkWriteOptions = new BulkWriteOptions().ordered(false);
         BulkWriteResult bulkWriteResult = collection.bulkWrite(bulkWrites, bulkWriteOptions);

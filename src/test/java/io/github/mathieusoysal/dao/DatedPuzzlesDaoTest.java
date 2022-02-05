@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.github.mathieusoysal.codingame_stats.CodinGame;
 import com.github.mathieusoysal.codingame_stats.puzzle.Puzzle;
@@ -20,7 +21,7 @@ import io.github.mathieusoysal.util.MongoDBMockTest;
 import io.github.mathieusoysal.utils.PuzzleDator;
 
 class DatedPuzzlesDaoTest extends MongoDBMockTest {
-
+    private final String regex = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}$";
     private DatedPuzzlesDao puzzleDao;
 
     @BeforeEach
@@ -68,7 +69,7 @@ class DatedPuzzlesDaoTest extends MongoDBMockTest {
         FindIterable<Document> document = mongoClient.getDatabase("CodinGame-stats")
                 .getCollection(DatedPuzzlesDao.PUZZLES_HISTORY_COLLECTION)
                 .find().limit(1);
-        assertDoesNotThrow(() -> document.first().getDate("date"));
+        assertTrue(document.first().getString("date").matches(regex));
     }
 
     private long countDocuments() {
